@@ -1,6 +1,6 @@
 # pygame-retro-news-feed
 
-Display current news with a retro type effect using pygame.
+- ![#16C8F0](https://via.placeholder.com/15/16C8F0/000000?text=+) Display current news with a retro type effect using pygame.
 
 I wanted to create a retro type news feed to possible use with a raspberry pi connected to an old tv or crt. I am using BeautifulSoup to parse the news. Be aware tha this will eventually stop working if the news site makes any changes to their site.
 
@@ -13,4 +13,5 @@ I am doing a check if there is news and the current time is less than an hour re
 This should limit the calls to parse the news site to once an hour while this application is running.
 
 
+![Glitch backfround](./images/bg1.png)
 
