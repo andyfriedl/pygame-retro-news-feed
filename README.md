@@ -13,5 +13,5 @@ I am doing a check if there is news and the current time is less than an hour re
 This should limit the calls to parse the news site to once an hour while this application is running.
 
 
-![Glitch backfround](./images/bg1.png)
+![Glitch backfround](./images/Screenshot 2023-02-21 at 7.23.51 PM.png)
 
