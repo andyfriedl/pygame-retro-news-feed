@@ -22,12 +22,12 @@ pygame.display.set_icon(gameIcon)
 # Set up the window
 screen = pygame.display.set_mode()
 
-# get the default size
+# get the default screen size
 screen_x, screen_y = screen.get_size()
 screen = pygame.display.set_mode((screen_x, screen_y))
 
 # Add background
-bg = pygame.image.load("images/bg1.png")
+bg = pygame.image.load("images/bg.png") # otptions bg1.png | bg2.png | bg3.png
 bg = pygame.transform.scale(bg, screen.get_size())
 
 # Set font
