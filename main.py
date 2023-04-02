@@ -26,8 +26,6 @@ screen = pygame.display.set_mode()
 screen_x, screen_y = screen.get_size()
 screen = pygame.display.set_mode((screen_x, screen_y))
 
-
-
 # Load the background images
 bg_images = ["images/bg1.png", "images/bg.png", "images/bg2.png", "images/bg3.png", "images/bg4.png"]
 bg_index = 0
@@ -38,7 +36,6 @@ type_speed_index = 0
 type_speed_number = [round(random.uniform(0.01, 0.18), 2),
            round(random.uniform(0.005, 0.058), 2)]
 type_speed = type_speed_number[0]
-
 
 # Set font
 font = pygame.font.Font('fonts/VCR_OSD_MONO.ttf', 42)
@@ -96,8 +93,6 @@ def key_input():
             elif event.key == pygame.K_b:
                 bg_index = (bg_index + 1) % len(bg_images)
                 bg_image = pygame.image.load(bg_images[bg_index])
-
-
 
 done = False
 
