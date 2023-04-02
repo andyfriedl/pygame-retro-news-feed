@@ -8,9 +8,12 @@ I wanted to create a retro type news feed to possible use with a raspberry pi co
 
 I am storing the date/time the last time the news was parsed and saved to the news.txt file and the news in a json file.
 
-I am doing a check if there is news and the current time is less than an hour return the news saved in news.txt. If the news is more than an hour call out and parse the news site and save the new date/time and the latest news. 
+There is a check if there is news and the current time is less than an hour return the news saved in news.txt. If the news is more than an hour call out and parse the news site and save the new date/time and the latest news. 
 
 This should limit the calls to parse the news site to once an hour while this application is running.
+
+* Press Q or esc to Quit
+* Press [B,b] to change background image
 
 
 ![News screenshot](./images/Screenshot_2023-02-21.png)
