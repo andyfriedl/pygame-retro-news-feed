@@ -26,9 +26,19 @@ screen = pygame.display.set_mode()
 screen_x, screen_y = screen.get_size()
 screen = pygame.display.set_mode((screen_x, screen_y))
 
-# Add background
-bg = pygame.image.load("images/bg.png") # otptions bg1.png | bg2.png | bg3.png
-bg = pygame.transform.scale(bg, screen.get_size())
+
+
+# Load the background images
+bg_images = ["images/bg1.png", "images/bg.png", "images/bg2.png", "images/bg3.png", "images/bg4.png"]
+bg_index = 0
+bg_image = pygame.image.load(bg_images[bg_index])
+
+# Type Speed
+type_speed_index = 0
+type_speed_number = [round(random.uniform(0.01, 0.18), 2),
+           round(random.uniform(0.005, 0.058), 2)]
+type_speed = type_speed_number[0]
+
 
 # Set font
 font = pygame.font.Font('fonts/VCR_OSD_MONO.ttf', 42)
@@ -73,22 +83,27 @@ def create_line(sentences):
     return lines
 
 
-def quit_this():
+def key_input():
+    global bg_index, bg_image, type_speed_number, type_speed_index
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
+            if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
                 pygame.quit()
                 sys.exit()
+            elif event.key == pygame.K_b:
+                bg_index = (bg_index + 1) % len(bg_images)
+                bg_image = pygame.image.load(bg_images[bg_index])
+
 
 
 done = False
 
 # loop
 while True:
-    quit_this()
+    key_input()
 
     # get news - news is stale for 1 hour
     lines = create_line(return_news(url))
@@ -100,19 +115,19 @@ while True:
             '>> Latest News from around the Earth. Last updated: ' + str(data["date"]))
 
     for i, line in enumerate(lines):
-        quit_this()
+        key_input()
         # Loop through each character in the line
         for j in range(len(line)):
             # Handle events
-            quit_this()
+            key_input()
 
             # Draw the background
             screen.fill(BLACK)
-            screen.blit(bg, (0, 0))
+            screen.blit(bg_image, (0, 0))
 
             # Draw the lines of text that have already been printed
             for k in range(max(0, i - MAX_LINES + 1), i):
-                quit_this()
+                key_input()
                 text_surface = font.render(lines[k], True, WHITE)
                 screen.blit(text_surface, (x, y + (k - i + MAX_LINES - 1)
                                            * text_surface.get_rect().height))
@@ -126,9 +141,8 @@ while True:
             # Update the screen
             pygame.display.flip()
 
-            # Pause briefly to create the typewriter effect
-            type_time = round(random.uniform(0.01, 0.18), 2)
-            time.sleep(type_time)
+            # Pause briefly to create the typewriter effect or type speed
+            time.sleep(round(random.uniform(0.01, 0.18), 2))
 
             if done:
                 break
