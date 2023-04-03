@@ -9,17 +9,23 @@ from bs4 import BeautifulSoup
 
 def fetch_news(url):
 
-    response = requests.get(url)
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as error:
+        print(f"HTTP error occurred: {error}")
+        return []
+
     soup = BeautifulSoup(response.content, "html.parser")
 
     headlines = soup.select('a[data-testid="Heading"] > span')
 
-    text = ''
+    # Extract headline text and filter out unwanted headlines
+    headlines_text = [headline.text.strip()
+                      for headline in headlines if ', article' not in headline.text]
 
-    for headline in headlines:
-        headline_text = headline.text.strip()
-        if not (re.search(', article', headline_text)):
-            text += "\\  >> " + headline_text
+    # Join the headlines together into a single string seperated by '\n'
+    text = '\n'.join(f"\\  >> {headline_text}" for headline_text in headlines_text)
 
     # Split the text into a list of sentences using a special character
     sentences = text.split('\\')
@@ -68,5 +74,5 @@ def return_news(url):
             news = fetch_news(url)
             f.write(json.dumps({"date": now.strftime(
                 "%Y-%m-%d %H:%M:%S"), "news": news}))
-            
+
     return news
