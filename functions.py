@@ -18,7 +18,7 @@ def fetch_news(url):
 
     soup = BeautifulSoup(response.content, "html.parser")
 
-    headlines = soup.select('a[data-testid="Heading"] > span')
+    headlines = soup.select('a[data-testid="Heading"] > span, a[data-testid="Link"]')
 
     # Extract headline text and filter out unwanted headlines
     headlines_text = [headline.text.strip()
