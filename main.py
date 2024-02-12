@@ -47,11 +47,24 @@ MAX_LINES = 20
 x = 20
 y = 20
 
-url = "https://www.reuters.com/world/"
+# Specify the full path to the configuration file
+# Config stored outside repo
+# API key needed- get free api key here https://newsapi.org/
+config_file_path = '../config.json'
+
+# Load the configuration file
+with open(config_file_path) as f:
+    config = json.load(f)
+
+# Access the API key from the configuration
+api_key = config['api_key']
+
+url = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=' + api_key
 
 
 def create_line(sentences):
     # Initialize the list of lines to display on the screen
+    
     lines = []
     # Loop through each sentence and add it to a line
     for sentence in sentences:
@@ -102,7 +115,6 @@ while True:
 
     # get news - news is stale for 1 hour
     lines = create_line(return_news(url))
-
     # Add last updated news date to caption
     with open("news.txt", "r") as f:
         data = json.load(f)

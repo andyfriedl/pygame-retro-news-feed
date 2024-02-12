@@ -4,8 +4,6 @@ import os
 import json
 import datetime
 
-from bs4 import BeautifulSoup
-
 
 def fetch_news(url):
 
@@ -15,21 +13,19 @@ def fetch_news(url):
     except requests.exceptions.HTTPError as error:
         print(f"HTTP error occurred: {error}")
         return []
+    
+    json_data = response.content.decode('utf-8')
+    data = json.loads(json_data)
 
-    soup = BeautifulSoup(response.content, "html.parser")
-
-    headlines = soup.select('a[data-testid="Heading"] > span, a[data-testid="Link"]')
-
-    # Extract headline text and filter out unwanted headlines
-    headlines_text = [headline.text.strip()
-                      for headline in headlines if ', article' not in headline.text]
+    titles = [article["title"] for article in data["articles"]]
+    headlines_text = [article["title"] for article in data["articles"]]
 
     # Join the headlines together into a single string seperated by '\n'
     text = '\n'.join(f"\\  >> {headline_text}" for headline_text in headlines_text)
 
     # Split the text into a list of sentences using a special character
     sentences = text.split('\\')
-
+  
     return sentences
 
 
@@ -49,7 +45,7 @@ def return_news(url):
                 time_difference = now - stored_date
                 seconds_difference = time_difference.total_seconds()
 
-                if seconds_difference < 3600:
+                if stored_news != [] and seconds_difference < 3600 and len(stored_news[0]) > 2:
                     # Less than an hour. Using stored news.
                     news = stored_news
                 else:
